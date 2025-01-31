@@ -1,0 +1,7 @@
+create database if not exists coderhouse_ventas;
+use coderhouse_ventas; 
+select * from clientes;
+select * from productos;
+select * from ventas;
+select * from categorias;
+select * from cliente_venta;

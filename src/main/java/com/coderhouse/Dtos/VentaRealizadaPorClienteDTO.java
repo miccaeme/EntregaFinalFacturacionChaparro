@@ -1,5 +1,6 @@
 package com.coderhouse.Dtos;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,4 +16,6 @@ public class VentaRealizadaPorClienteDTO {
 	
 	@Schema(description = "Lista de Ventas por IDs", requiredMode = Schema.RequiredMode.REQUIRED, example = "['1']" )
 	private List<Long> ventaIds;
+	
+	private LocalDateTime fechaActual;
 }

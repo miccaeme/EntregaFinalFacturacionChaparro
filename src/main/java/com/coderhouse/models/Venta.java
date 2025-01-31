@@ -39,9 +39,9 @@ public class Venta {
 	@Schema(description = "ID del Cliente que compro", example = "1")
 	@Column(name = "Id_Cliente")
 	private String IdCliente;
-	@Schema(description = "ID de cada categoria", requiredMode = Schema.RequiredMode.REQUIRED, example = "2025/1/25")
+	@Schema(description = "ID de cada categoria", requiredMode = Schema.RequiredMode.REQUIRED, example = "MM/DD/AAAA")
 	@Column(name = "FechaVenta")
-	private LocalDateTime createdAt;
+	private LocalDateTime fechaActual;
 	@Schema(description = "Monto total de la venta", requiredMode = Schema.RequiredMode.REQUIRED, example = "$500000000")
 	@Column(name = "MontoTotal")
 	private Integer montoTotal;
@@ -71,12 +71,12 @@ public class Venta {
 
 	
 
-	public Venta(long id, String nombreCliente, LocalDateTime createdAt, Integer montoTotal, String estado,
+	public Venta(long id, String nombreCliente, LocalDateTime fechaActual, Integer montoTotal, String estado,
 			String metodoDePago) {
 		this();
 		this.id = id;
 		this.nombreCliente = nombreCliente;
-		this.createdAt = createdAt;
+		this.fechaActual = fechaActual;
 		this.montoTotal = montoTotal;
 		this.estado = estado;
 		this.metodoDePago = metodoDePago;

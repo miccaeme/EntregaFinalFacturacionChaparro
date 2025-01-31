@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coderhouse.Dtos.VentaRealizadaPorClienteDTO;
 import com.coderhouse.models.Cliente;
 import com.coderhouse.repositories.ClienteRepository;
 import com.coderhouse.service.ClienteService;
@@ -65,7 +66,7 @@ public class ClienteController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}}
 		
-		@PutMapping("/{id}")
+	@PutMapping("/{id}")
 		public ResponseEntity<Cliente> updateClienteById(@PathVariable Long id, @RequestBody Cliente clienteModificado) {
 			try {
 				Cliente updateCliente = clienteService.updateClienteById(id, clienteModificado);
@@ -77,7 +78,7 @@ public class ClienteController {
 			}}
 		
 
-		@DeleteMapping("/{id}")
+	@DeleteMapping("/{id}")
 		public ResponseEntity<Void> deleteClienteById(@PathVariable Long id) {
 			try {
 				clienteService.deleteClienteById(id);
@@ -89,14 +90,21 @@ public class ClienteController {
 			} catch (Exception e) {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500
 			}
-		
+			}
+// Check
+		@PostMapping ("/crearVentaParaCliente")
+		public ResponseEntity<Cliente> crearVentaParaCliente(@RequestBody VentaRealizadaPorClienteDTO dto){
+			try {
+				Cliente cliente = clienteService.guardarVentaParaCliente(dto);
+				return ResponseEntity.ok(cliente); //200
 
+			} catch (IllegalArgumentException e) {
+				return ResponseEntity.badRequest().build(); 
 
-		
-		
-	}
-	
-	
+			} catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500
+			}
+		}
 	
 	
 	

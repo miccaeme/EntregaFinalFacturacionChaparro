@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,34 +13,48 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
+@Schema(description = "Modelo de Clientes")
 @Table(name= "Clientes")
 
 public class Cliente {
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", DNI=" + DNI + ", nDeCliente="
-				+ nDeCliente + "]";
-	}
-
-	@Id
+	
+	@Schema(description = "ID de cada cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Id //PrimaryKey
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremental
 	@Column(name= "Cliente_ID")
 	private long id;
-	
+	@Schema(description = "Nombre de cada cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "Micaela")
 	@Column(name= "Nombre")
-	
 	private String nombre;
+	@Schema(description = "Apellido de cada cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "Chaparro")
+	@Column(name="apellido")
 	private String apellido;
-	
+	@Schema(description = "ID de cada cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "12357896")
 	@Column (unique = true, nullable = false) // va a ser unico y no nulo
 	private int DNI;
+	
+	@Schema(description = "ID de cada cliente", requiredMode = Schema.RequiredMode.REQUIRED, example = "CL1")
+	@Column(name="Numero De Cliente")
 	private String nDeCliente;
+	@Schema(description = "Listado de Ventas que realizo el cliente")
+ 	@ManyToMany(mappedBy = "clientes", fetch = FetchType.EAGER)
+    private List<Venta> ventas = new ArrayList<>();
+ 	
 	
-	@ManyToMany(mappedBy = "clientes", fetch = FetchType.EAGER)
+	/* Ver de mapear con venta y no con producto 
+	@ManyToMany(mappedBy = "Producto", fetch = FetchType.EAGER)
 	private List<Producto> productos = new ArrayList<>();
+	 */
 	
+	@Schema(description = "Fecha en la que se creo el Cliente", example = "1")
 	private LocalDateTime createdAt;
 	
 	
@@ -60,63 +75,6 @@ public class Cliente {
 	}
 
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
-	public int getDNI() {
-		return DNI;
-	}
-
-	public void setDNI(int dNI) {
-		DNI = dNI;
-	}
-
-	public String getnDeCliente() {
-		return nDeCliente;
-	}
-
-	public void setnDeCliente(String nDeCliente) {
-		this.nDeCliente = nDeCliente;
-	}
-
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	
 	
 	
 

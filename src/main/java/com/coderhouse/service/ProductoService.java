@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.coderhouse.models.Categoria;
 import com.coderhouse.models.Cliente;
 import com.coderhouse.models.Producto;
+import com.coderhouse.repositories.CategoriaRepository;
 import com.coderhouse.repositories.ClienteRepository;
 import com.coderhouse.repositories.ProductoRepository;
 
@@ -17,6 +19,8 @@ public class ProductoService {
 	@Autowired
 	//Si no se inyecta no se puede acceder a sus metodos
 	private ProductoRepository productoRepository ;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 	
 	public List<Producto> getAllProducto(){
 		return productoRepository.findAll();
@@ -50,5 +54,12 @@ public class ProductoService {
 		}
 		productoRepository.deleteById(id);
 	}
+	@Transactional
+	public Producto asignarCategoriaAProducto(  Long productoId ,Long categoriaId) {
+		Categoria categoria = categoriaRepository.findById(categoriaId).orElseThrow(() -> new IllegalArgumentException("Categoria no encontrada"));
+		Producto producto  = productoRepository.findById(productoId).orElseThrow(() -> new IllegalArgumentException("producto no encontrado"));
 	
+		producto.setCategoria(categoria);
+		return productoRepository.save(producto);
+	}
 }

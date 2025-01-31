@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,19 +14,26 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-
+@Getter
+@Setter
+@ToString
+@Schema(description = "Modelo de cada Categoria de producto")
 @Entity
 @Table(name= "Categorias")
 
 public class Categoria {
 	
-
+	@Schema(description = "ID de cada categoria", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremental
 	
 	@Column(name= "ID_Categoria")
 	private long id;
+	
 	@Column(unique =true, nullable = false, name = "Nombre_Categoria")
 	private String nombre;
 	@Column(name = "Descripcion_Categoria")
@@ -49,33 +57,6 @@ public class Categoria {
 		this.descripcion = descripcion;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
 	
-	@Override
-	public String toString() {
-		return "Categoria [id=" + id + ", nombre=" + nombre + "]";
-	}
 	
 }

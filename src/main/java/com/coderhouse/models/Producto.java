@@ -16,7 +16,13 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name= "Productos")
 
@@ -24,21 +30,36 @@ public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremental
 	
-	@Column(name= "Producto_ID")
+	@Column(name= "Producto")
 	private long id;
 	@Column(name = "Nombre_Producto")
 	private String nombre;
+	@Column
 	private String descripcion;
 	
+	/*// Ver de mapear con venta y no con cliente directo
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-			name = "cliente_producto", 
-			joinColumns = @JoinColumn(name= "cliente_id"),
+			name = "venta_producto", 
+			joinColumns = @JoinColumn(name= "venta_id"),
 			inverseJoinColumns = @JoinColumn (name="producto_id")
 			)
 	@JsonIgnore
 	private List<Cliente> clientes = new ArrayList<>();
 	
+	// Ver de mapear con venta y no con cliente directo */
+	
+	/* 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "cliente_producto", 
+			joinColumns = @JoinColumn(name= "venta_id"),
+			inverseJoinColumns = @JoinColumn (name="producto_id")
+			)
+	@JsonIgnore
+	private List<Cliente> clientes = new ArrayList<>(); 
+	 
+	*/
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Categoria categoria ;
 	
@@ -52,47 +73,6 @@ public class Producto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-	public Categoria getCategoria() {
-		return categoria;
-	}
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-	@Override
-	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", categoria=" + categoria + "]";
-	}
 	
 	
 	
